@@ -1,0 +1,110 @@
+=== SLIDE 1 ===
+Team Name: Resume Run
+Problem Statement: Intelligent Candidate Discovery & Ranking Challenge - Designing a high-performance candidate shortlisting pipeline that excludes low-quality/trap profiles, scores core ML/Search skills, and aligns candidates by product fit and platform availability.
+Team Leader Name: Abhishek Vishwakarma
+=== SLIDE 2 ===
+Solution Overview
+Proposed Solution Overview
+• A high-performance, 100% offline, deterministic rule-based ranking engine designed to source top Senior AI Engineers.
+• Incorporates deep semantic skill alignment, chronological career parsing, and multi-factor behavioral signal weighting.
+• Operates on streaming principles to process large datasets (100,000 candidates) in seconds with extremely low memory requirements.
+Differentiators from Traditional Systems
+• Active Fraud & Honeypot Protection: Programmatically flags and excludes candidates with anomalous or logically impossible profile details (e.g. expert skill with 0 duration, startup dates prior to launch).
+• Availability-Centric Ranking: Factors in recruiter response rate, avg response time, notice period, and active recency. A technically perfect candidate who is inactive gets down-weighted, prioritizing available and active candidates.
+• Target ML Experience Calculation: Computes actual ML/AI tenure from job history details, avoiding keyword-stuffers and non-technical profiles.
+=== SLIDE 3 ===
+JD Understanding & Candidate Evaluation
+Key Requirements Extracted from Job Description (JD)
+• Experience: 5–9 years (ideally 6–8 years) with a strong preference for product engineering experience.
+• Technical Core: Vector search, embeddings, vector databases (Pinecone, Milvus, Weaviate), learning-to-rank, evaluation metrics (NDCG, MRR, MAP), and NLP/Deep Learning.
+• Logistics: Location in or willingness to relocate to Pune/Noida offices (hybrid), and notice periods of sub-30 days preferred.
+Evaluating Candidate Fit Beyond Keyword Matching
+• Chronological Verification: Verifies candidate career history to calculate the actual duration of ML/AI experience rather than relying on raw years of experience.
+• Title & Role Relevance: Backend/SWE profiles are graded based on their actual ML tenure, and non-technical titles (marketing, HR, operations) are filtered out.
+• Logical Consistency: Automatically discards candidate profiles containing expert/advanced skills with 0 duration or employment at newly founded startups prior to their actual launch date (honeypots).
+=== SLIDE 4 ===
+Ranking Methodology
+Candidate Retrieval and Filtering
+• Stream-loads the candidate JSONL pool and immediately filters out (1) Honeypots and (2) Consulting-only backgrounds (candidates who worked ONLY at TCS, Infosys, Wipro, Accenture, Cognizant, etc.).
+Multi-Factor Profile Fit Scoring (Weighted 60% of Total)
+• Experience Fit (15%): Optimal score for 5–9 years of experience, peaking at 6–8 years.
+• ML Experience (25%): Scoring based on years specifically spent in ML, AI, Search, Retrieval, or Ranking roles.
+• Role Relevance (20%): Current title graded (AI/ML Eng = 1.0, Data Scientist = 0.9, Backend/SWE = 0.8/0.4, Non-tech = 0.0).
+• Skill Match (20%): Computes a weighted score based on core search/retrieval/ML skills, adjusted by proficiency level and duration.
+• Keywords (10%): Scans descriptions for specific technical terms (ndcg, Pinecone, RAG, etc.).
+• Product Company Ratio (10%): Proportion of career spent at recognized product companies.
+Behavioral Signals Calibration (Weighted Multipliers & Bonuses)
+• Recency & Activity: Multiplies profile fit based on activity recency (up to 0.4x penalty for >6 months inactive) and response rates.
+• Notice Period: Deducts up to 0.5x for notice periods exceeding 60-90 days, while awarding bonuses (+3% score) for sub-30 day availability.
+• Location: Relocation willingness and local Pune/Noida candidates receive score bonuses, while non-local and unwilling candidates are penalized.
+• Formula: Final Score = Profile Fit * (1.0 + Behavioral Bonuses) * Recency_mult * Notice_mult * Location_mult
+=== SLIDE 5 ===
+Explainability & Data Validation
+Explainability Engine
+• Generates structured, 2-3 sentence rationales for every candidate in the shortlist based on their rank band.
+• Mentions total experience, ML experience, specific top core skills, previous product companies, location status, and notice period.
+• Example: "Exceptional founding engineer candidate with 7.2 years experience, specializing in skills in Deep Learning, Weaviate, Recommendation Systems. Proven record building ranking/retrieval systems at Zomato, Google. locally based in Noida with a sub-30 day notice (15 days)."
+Preventing Hallucinations
+• 100% Deterministic NLG: Replaced probabilistic generative models with a rule-based Natural Language Generation (NLG) engine. Every claim in the rationale is directly bound to raw database values, ensuring zero hallucinations and perfect auditability.
+Suspicious Profiles & Fraud Handling
+• Honeypots Rejection: Identifies profiles containing impossible durations (0 months for expert skills) or impossible timelines (Krutrim/Sarvam employment before 2023).
+• Service/Consulting Rejection: Disqualifies candidates whose entire career history is limited to services companies (TCS, Infosys, Accenture, etc.), keeping only candidates with product experience.
+=== SLIDE 6 ===
+End-to-End Workflow
+End-to-End Execution Flow
+1. Initialization: Load JD configurations, target skills, consulting blacklist, product company list, and target cities.
+2. Streaming Ingestion: Reads the 100,000 candidate dataset directly from candidates.jsonl.gz line by line to keep RAM usage under 100MB.
+3. Hard Filtering: Evaluates honeypots and consulting-only profiles. Disqualifies invalid candidates immediately.
+4. Feature Extraction: Computes overall experience, ML experience, role title fit, skill score, and product company ratio.
+5. Behavioral Scoring: Applies bonuses for active engagement and multipliers (penalties) for long notice periods or lack of relocation.
+6. Stable Sorting: Sorts candidates by final score (descending) with candidate_id (ascending) as a tie-breaker to ensure stable ordering.
+7. Rationale Generation & Export: Runs the NLG engine on the top 100 candidates to create personalized explanations. Writes the output to submission.csv.
+=== SLIDE 7 ===
+System Architecture
+Modular Pipeline Architecture
+• Data Layer: Handles streaming ingestion of compressed candidate records (gzipped JSONL) to maintain a sub-100MB RAM footprint.
+• Quality Guardrails (Hard Rejection Filters):
+- Honeypot/Logic-Trap Detector: Rejects profile inconsistencies (e.g. Krutrim before 2023, expert skill with 0 duration).
+- Services Company Exclusion: Rejects candidate profiles containing only services/consulting firms.
+• Multi-Factor Scoring Core:
+- Technical Fit: Grades overall experience, ML experience, role title fit, skill score, and description keywords.
+- Product Fit: Computes career ratio at recognized product companies vs. service firms.
+• Behavioral Calibration (Availability & Location Multipliers):
+- Computes multipliers and bonuses for activity recency, response rates, response time, relocation interest, and notice period.
+• Sorter & NLG Output Engine:
+- Stable Sorter: Sorts by score descending, with candidate ID as secondary tiebreaker.
+- NLG Template Generator: Forms structured, fact-based candidate justifications.
+- Exporter: Outputs the top 100 candidate shortlist to submission.csv.
+=== SLIDE 8 ===
+Results & Performance
+Key Quantitative Results & Shortlist Quality
+• Ingestion & Filtering: Ingested 100,000 candidate profiles. Hard filters rejected 9.84% of candidates, leaving 90,159 valid profiles for final ranking.
+• Top shortlists showcase exceptional candidates fitting all JD requirements:
+- Aarav Trivedi (#1, Score: 1.1600): 7.2 yrs exp, 7.2 yrs ML exp, ex-Zomato. Skills: Deep Learning, Weaviate, Recommendation Systems. Locally based in Noida, sub-30 day notice (15 days).
+- Nisha Pillai (#2, Score: 1.1500): 7.6 yrs exp, 7.6 yrs ML exp, ex-Sarvam AI. Skills: scikit-learn, PyTorch, Milvus. Locally based in Gurgaon, 45-day notice.
+- Ayaan Goyal (#3, Score: 1.1400): 6.5 yrs exp, 6.3 yrs ML exp, ex-Haptik. Skills: LoRA, Recommendation Systems, Weaviate. Locally based in Pune, sub-30 day notice (15 days).
+Compute & Resource Performance
+• Runtime Efficiency: Processed and ranked all 100,000 candidates in ~12.5 seconds (against the 5-minute challenge limit, a 24x speedup).
+• Memory footprint: Streaming reader keeps RAM usage under 100MB (against the 16GB limit, a 160x memory reduction).
+• Fully Offline: 100% local CPU processing, requiring no network calls or external API keys, meeting all offline requirements.
+=== SLIDE 9 ===
+Technologies Used
+Development Technologies & Frameworks
+• Python 3.12: The primary programming language, selected for its speed in scripting, robust text parsing, and standard library data tools.
+• NumPy: Leveraged for high-performance numerical operations and precision rounding of candidate scores.
+• gzip & json: Standard streaming libraries used to parse candidates.jsonl.gz directly, preventing disk overhead and keeping RAM footprint minimal.
+• datetime: Used for chronological checks (e.g. startup inception dates, activity recency decay).
+• csv: Utilized to write standard-compliant, RFC-conformant output files.
+AI & Automation Tools
+• Gemini 3.5 Flash via Antigravity: Used for parsing raw schemas, design review of honeypot filters, validating requirements, and ensuring 100% compliance with output specs.
+• python-pptx: Programmatic library utilized to insert text and structure slides within the presentation template.
+=== SLIDE 10 ===
+Submission Assets
+Primary Submission Deliverables
+• GitHub Repository: https://github.com/vishwabhishek/Resume_run
+• Live Interactive Sandbox: Live environment running on Hugging Face Spaces at: https://huggingface.co/spaces/abhishek-vishwakarma/redrob-ranker
+• Pipeline Entry Point: rank.py (The execution script that processes scoring, filtering, and exports results in seconds).
+Generated Artifacts
+• submission.csv: Contains the final ranked top 100 candidates with IDs, scores, and natural language explanations.
+• submission_metadata.yaml: Declares team metadata, parameters, compute environments, and reproduction instructions.
+=== SLIDE 11 ===

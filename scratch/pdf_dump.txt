@@ -1,0 +1,176 @@
+Redrob Recruiter Matcher AI
+Senior AI Engineer Search — Intelligent Ranking & Behavioral Re-Ranking
+
+Team Name: Resume Run
+Primary Contact: Abhishek Vishwakarma
+OS Platform: Linux (Ubuntu 24.04 LTS)
+Execution Mode: 100% Offline, Zero APIs, Zero Network Calls
+
+REDROB DATA & AI HACKATHON | SUBMISSION PRESENTATION
+
+The Recruiting Dilemma: Beyond Keyword Matching
+Traditional ATS keyword-matching filters fail to find the right candidates. Recruiters are either swamped with irrelevant keyword-stuffed
+resumes or miss top-tier candidates who don't list specific brand names. Our solution ranks candidates the way a human recruiter would:
+assessing context, experience depth, and real-world availability.
+
+Core Design Principles:
+• Rigorous Technical Gating: Calculate actual years of AI/ML-specific experience rather than relying on profile-wide metrics.
+• Disqualification of Profile Honeypots: Identify and immediately filter logical inconsistencies (e.g. 0-duration expert skills or impossible
+startup timelines).
+• Filtering Out Non-Product Gaps: Reject candidates with experiences exclusively in mass consulting and IT-service firms.
+• Behavioral Modulation: Use real-time availability metrics (notice period, response speed, activity, location) as a tie-breaker, not a
+replacement for talent.
+
+Methodology: Rule-Based Semantic Matching & Behavioral Re-Ranking
+
+Page 2 of 5
+
+REDROB DATA & AI HACKATHON | SUBMISSION PRESENTATION
+
+Unmasking profile traps and honeypots
+Analyzing 100,000 candidates revealed intentional traps designed to trigger simple keyword matchers:
+
+Traps Identified
+
+System Defense
+
+Impact
+
+Rule 1: Expert Skill, 0 Duration
+Candidates claiming 'expert' or 'advanced'
+proficiency in AI tools but listing 0 months of
+experience.
+
+Identified in 21 profiles.
+Immediate disqualification (Score set to 0.0).
+
+Blocks keyword-stuffers.
+
+Rule 2: Impossible Foundings
+Candidates claiming employment at startups
+(Krutrim, Sarvam AI) before those companies
+were founded (pre-2023).
+
+Identified in 73 profiles.
+Immediate disqualification (Score set to 0.0).
+
+Blocks fraudulent histories.
+
+Rule 3: Consulting Only
+Candidates whose entire work history is at
+services firms (TCS, Infosys, Wipro, etc.).
+
+Checks entire career history.
+Immediate disqualification (Score set to 0.0).
+
+Ensures product-native engineering
+talent.
+
+Methodology: Rule-Based Semantic Matching & Behavioral Re-Ranking
+
+Page 3 of 5
+
+REDROB DATA & AI HACKATHON | SUBMISSION PRESENTATION
+
+Scoring & Re-Ranking Architecture
+Our ranking algorithm computes a candidate's final score by multiplying the Technical Profile Fit with the Behavioral Availability
+Modifier.
+
+Technical Fit
+Component (Weight)
+
+Description / Formula
+
+Behavioral Modifier
+(Range)
+
+Description / Logic
+
+ML Experience Duration (25%)
+
+Months in roles matching ML
+keywords or description terms.
+Prefers 3+ years.
+
+Recency & Activity
+
+Bonus for active, penalty for
+inactivity > 6 months (0.4x).
+
+Current Title Fit (20%)
+
+1.0 for ML/AI engineers; 0.9 for
+Data Scientists; 0.8 for Backend
+w/ ML; 0.0 for non-tech.
+
+Notice Period
+
+Bonus for <=30 days, penalty for
+>90 days (0.5x).
+
+Core Skills Alignment (20%)
+
+Core skills (Embeddings, RAG,
+LoRA, Search) scaled by
+proficiency & log-scaled
+duration.
+
+Location/Relocation
+
+Bonus for NCR/Pune; penalty if
+non-local and not willing to
+relocate (0.5x).
+
+Experience Years (15%)
+
+Flat 1.0 for 5-9 years; drops
+linearly for junior and senior
+outliers.
+
+Recruiter Response
+
+Bonus for fast, responsive
+candidates; penalty for response
+rate < 20% (0.7x).
+
+Product Fit / Keywords (20%)
+
+Ratio of months at product firms
+(10%) + occurrence of
+search/vector terms in job
+history (10%).
+
+GitHub Activity
+
+Small bonus (+3%) for active
+GitHub contributors.
+
+Methodology: Rule-Based Semantic Matching & Behavioral Re-Ranking
+
+Page 4 of 5
+
+REDROB DATA & AI HACKATHON | SUBMISSION PRESENTATION
+
+Validation Results & High-Performance Specs
+Output Quality and Schema Validation:
+• Schema Compliant: Generated CSV file team_run.csv conforms to the exact headers (candidate_id, rank, score, reasoning) required and
+passed the validator check.
+• No Formatting Artifacts: All generated reasoning statements are clean, use natural phrasing, do not contain trailing double periods, and
+display proper spacing.
+• 100% Genuine ML Shortlist: The top-ranked candidates consist entirely of high-caliber NLP, AI, and Machine Learning engineers with years
+of product experience, successfully filtering out QA and frontend profiles.
+
+Compute and Speed Performance:
+• Fast Execution: Scores and ranks 100,000 profiles in under 13 seconds (averaging 12.26s) on a single CPU core, utilizing vector/matrix
+logic in NumPy.
+• Minimal Memory Footprint: Fits entirely within standard RAM using streaming file reading (JSONL), leaving 99% of resources free.
+• Air-Gapped Compliance: Runs entirely offline, requiring zero network calls or external APIs, securing candidate privacy.
+
+Conclusion: Our rule-based system delivers a highly-focused, premium shortlist of vetted candidates. By coupling strict technical gating
+with behavioral modulation, it mirrors the selection quality of an elite recruiter.
+
+Methodology: Rule-Based Semantic Matching & Behavioral Re-Ranking
+
+Page 5 of 5
+
+
