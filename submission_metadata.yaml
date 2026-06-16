@@ -1,0 +1,43 @@
+# Redrob Hackathon — Submission Metadata
+team_name: "Resume Run"
+
+primary_contact:
+  name: "Abhishek Vishwakarma"
+  email: "abhishek.vishwakarma@example.com"
+  phone: "+91-9999999999"
+
+team_members:
+  - name: "Abhishek Vishwakarma"
+    email: "abhishek.vishwakarma@example.com"
+    role: "ML Engineer"
+
+github_repo: "https://github.com/abhishek-vishwakarma/Resume_Run"
+sandbox_link: "https://huggingface.co/spaces/abhishek-vishwakarma/redrob-ranker"
+reproduce_command: "python3 rank.py --candidates ./candidates.jsonl --out ./submission.csv"
+
+compute:
+  platform: "Local PC"
+  cpu_cores: 8
+  ram_gb: 16
+  python_version: "3.12.3"
+  os: "Linux Ubuntu 24.04 LTS"
+  uses_gpu_for_inference: false
+  has_network_during_ranking: false
+  pre_computation_required: false
+  pre_computation_time_minutes: 0
+
+ai_tools_used:
+  - "Gemini"
+
+ai_usage_summary: |
+  Used Gemini 3.5 Flash via Antigravity to analyze candidate schemas, identify profile honeypots, implement features, and validate output formats. All code runs 100% locally with zero network calls.
+
+methodology_summary: |
+  A high-performance, fully offline rule-based ranking system designed to discover top Senior AI Engineers. Implements dynamic honeypot candidate filtering (94 logic-trap profiles blocked), IT-services consulting firm exclusion, and ML experience duration extraction. Scoring combines technical alignment (embeddings, retrieval, search) with weighted behavioral platform signals. Runs in ~12 seconds on a single CPU core.
+
+declarations:
+  read_submission_spec: true
+  code_is_original_work: true
+  no_collusion: true
+  honeypot_check_done: true
+  reproduction_tested: true
