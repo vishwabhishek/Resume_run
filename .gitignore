@@ -16,3 +16,9 @@ dist/
 build/
 .pytest_cache/
 /.vscode/
+candidates.jsonl
+scratch/inspect_template.py
+scratch/inspect_template_details.py
+scratch/template_slides.txt
+scratch/test_parse.py
+scratch/verify_ppt.py

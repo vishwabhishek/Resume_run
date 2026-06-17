@@ -1,5 +1,5 @@
 === SLIDE 1 ===
-Team Name: Resume Run
+Team Name: Response 200
 Problem Statement: Intelligent Candidate Discovery & Ranking Challenge - Designing a high-performance candidate shortlisting pipeline that excludes low-quality/trap profiles, scores core ML/Search skills, and aligns candidates by product fit and platform availability.
 Team Leader Name: Abhishek Vishwakarma
 === SLIDE 2 ===

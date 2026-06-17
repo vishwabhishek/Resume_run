@@ -160,7 +160,7 @@ def create_presentation(filename="presentation.pdf"):
     story.append(Spacer(1, 1.5 * inch))
     
     meta_text = """
-    <b>Team Name:</b> Resume Run<br/>
+    <b>Team Name:</b> Response 200<br/>
     <b>Primary Contact:</b> Abhishek Vishwakarma<br/>
     <b>OS Platform:</b> Linux (Ubuntu 24.04 LTS)<br/>
     <b>Execution Mode:</b> 100% Offline, Zero APIs, Zero Network Calls
@@ -206,12 +206,12 @@ def create_presentation(filename="presentation.pdf"):
         ],
         [
             Paragraph("<b>Rule 1: Expert Skill, 0 Duration</b><br/>Candidates claiming 'expert' or 'advanced' proficiency in AI tools but listing 0 months of experience.", body_style),
-            Paragraph("Identified in 21 profiles.<br/>Immediate disqualification (Score set to 0.0).", body_style),
+            Paragraph("Identified in 80 profiles.<br/>Immediate disqualification (Score set to 0.0).", body_style),
             Paragraph("Blocks keyword-stuffers.", body_style)
         ],
         [
             Paragraph("<b>Rule 2: Impossible Foundings</b><br/>Candidates claiming employment at startups (Krutrim, Sarvam AI) before those companies were founded (pre-2023).", body_style),
-            Paragraph("Identified in 73 profiles.<br/>Immediate disqualification (Score set to 0.0).", body_style),
+            Paragraph("Identified in 14 profiles.<br/>Immediate disqualification (Score set to 0.0).", body_style),
             Paragraph("Blocks fraudulent histories.", body_style)
         ],
         [
